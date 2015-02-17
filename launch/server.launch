@@ -1,0 +1,10 @@
+<launch>
+ 	<node name="video_server" pkg="web_video_server" type="web_video_server" output="screen">
+ 		<param name="transport" value="theora"/>
+ 		<param name="port" value="9000"/>
+ 	</node>
+
+    <node name="page_server" pkg="rose_html5_ui" type="serve.sh" output="screen" cwd="node"/>
+
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+</launch>

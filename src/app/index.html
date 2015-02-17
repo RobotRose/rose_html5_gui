@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rose Web Interface</title>
+  <script src="http://code.createjs.com/easeljs-0.7.1.min.js"></script>
+  <script src="http://cdn.robotwebtools.org.s3.amazonaws.com/threejs/current/three.min.js"></script>
+  <script src="http://cdn.robotwebtools.org.s3.amazonaws.com/EventEmitter2/current/eventemitter2.min.js"></script>
+  <script src="http://cdn.robotwebtools.org.s3.amazonaws.com/roslibjs/current/roslib.min.js"></script>
+  <script src="http://cdn.robotwebtools.org.s3.amazonaws.com/ros2djs/current/ros2d.min.js"></script>
+  <script src="http://cdn.robotwebtools.org.s3.amazonaws.com/ros3djs/current/ros3d.min.js"></script>
+  <script type="text/javascript" type="text/javascript">
+    var ros = new ROSLIB.Ros({
+        url : 'ws://rosepc1:9090'
+      });
+
+    ros.on('connection', function() {
+      console.log('Connected to websocket server.');
+    });
+
+    ros.on('error', function(error) {
+      console.log('Error connecting to websocket server: ', error);
+    });
+
+    ros.on('close', function() {
+      console.log('Connection to websocket server closed.');
+    });
+
+  var listener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/listener',
+    messageType : 'std_msgs/String'
+  });
+
+  listener.subscribe(function(message) {
+    console.log('Received message on ' + listener.name + ': ' + message.data);
+    listener.unsubscribe();
+  });
+
+  // Create the main viewer.
+    var viewer = new ROS2D.Viewer({
+      divID : 'map',
+      width : 308,
+      height : 250
+    });
+    // Setup the map client.
+    var gridClient = new ROS2D.OccupancyGridClient({
+      ros : ros,
+      rootObject : viewer.scene
+    });
+
+    // Scale the canvas to fit to the map
+    gridClient.on('change', function() {
+      viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
+      viewer.shift(gridClient.currentGrid.pose.position.x, gridClient.currentGrid.pose.position.y);
+    });
+  </script>
+</head>
+<body>
+  <div>
+    <img src="http://rosepc1:9000/stream?topic=/camera/rgb/image_color"></img>
+  </div>
+  <div id="map"></div>
+</body>
+</html>
+
