@@ -14,7 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
   rosbridge_server
   roscomm
   rose_joystick
-  rose20_platform
   rose21_platform
   rospy
   shared_variables
