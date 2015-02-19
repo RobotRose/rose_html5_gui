@@ -50,7 +50,6 @@
   <build_depend>roscomm</build_depend>
   <build_depend>rose_common</build_depend>
   <build_depend>rose_joystick</build_depend>
-  <build_depend>rose21_platform</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>shared_variables</build_depend>
   <build_depend>web_video_server</build_depend>
@@ -65,7 +64,6 @@
   <run_depend>roscomm</run_depend>
   <run_depend>rose_common</run_depend>
   <run_depend>rose_joystick</run_depend>
-  <run_depend>rose21_platform</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>shared_variables</run_depend>
   <run_depend>web_video_server</run_depend>
