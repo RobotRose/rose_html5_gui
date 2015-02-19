@@ -12,7 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscomm
   rose_joystick
   rospy
-  shared_variables
+  rose_shared_variables
   web_video_server
 )
 
